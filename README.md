@@ -2,6 +2,8 @@
 
 ![Google Ads MCP](bg.jpeg)
 
+[![smithery badge](https://smithery.ai/badge/@Zaydme/mcp-google-ads)](https://smithery.ai/server/@Zaydme/mcp-google-ads)
+
 A tool that connects [Google Ads](https://ads.google.com/) with Claude AI, allowing you to analyze your advertising data through natural language conversations. This integration gives you access to campaign information, performance metrics, keyword analytics, and ad management—all through simple chat with Claude.
 
 ---
