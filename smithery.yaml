@@ -1,0 +1,54 @@
+# Smithery configuration file: https://smithery.ai/docs/build/project-config
+
+startCommand:
+  type: stdio
+  commandFunction:
+    # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
+    |-
+    (config) => ({
+      command: 'python3',
+      args: ['google_ads_server.py'],
+      env: Object.fromEntries([
+        ['GOOGLE_ADS_AUTH_TYPE', config.authType || 'service_account'],
+        ['GOOGLE_ADS_CREDENTIALS_PATH', config.credentialsPath],
+        ['GOOGLE_ADS_DEVELOPER_TOKEN', config.developerToken],
+        ...(config.loginCustomerId ? [['GOOGLE_ADS_LOGIN_CUSTOMER_ID', config.loginCustomerId]] : []),
+        ...(config.impersonationEmail ? [['GOOGLE_ADS_IMPERSONATION_EMAIL', config.impersonationEmail]] : []),
+        ...(config.clientId && config.clientSecret ? [['GOOGLE_ADS_CLIENT_ID', config.clientId], ['GOOGLE_ADS_CLIENT_SECRET', config.clientSecret]] : [])
+      ])
+    })
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    required:
+      - authType
+      - credentialsPath
+      - developerToken
+    properties:
+      authType:
+        type: string
+        default: service_account
+        description: Authentication method to use
+      credentialsPath:
+        type: string
+        description: Path to credentials JSON file
+      developerToken:
+        type: string
+        description: Google Ads developer token
+      loginCustomerId:
+        type: string
+        description: Optional manager account ID
+      impersonationEmail:
+        type: string
+        description: Optional impersonation email
+      clientId:
+        type: string
+        description: OAuth client ID
+      clientSecret:
+        type: string
+        description: OAuth client secret
+  exampleConfig:
+    authType: service_account
+    credentialsPath: /app/credentials.json
+    developerToken: "1234567890"
+    loginCustomerId: "0123456789"
